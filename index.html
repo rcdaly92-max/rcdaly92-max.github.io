@@ -146,5 +146,8 @@ el('stageNav').addEventListener('click',ev=>{const btn=ev.target.closest('[data-
 el('glossaryBtn').addEventListener('click',showGlossary);el('asideGlossary').addEventListener('click',showGlossary);el('closeGlossary').addEventListener('click',hideGlossary);el('glossaryModal').addEventListener('click',ev=>{if(ev.target===el('glossaryModal'))hideGlossary();});document.addEventListener('keydown',ev=>{if(ev.key==='Escape'&&!el('glossaryModal').hidden)hideGlossary();});el('resetBtn').addEventListener('click',reset);
 state=newState();render();
 </script>
-</body>
-</html>
+
+<script src="registro-google-sheets/config.js"></script>
+<script src="registro-google-sheets/registro.js"></script>
+<script src="registro-google-sheets/juegos.js"></script>
+</body></html>
