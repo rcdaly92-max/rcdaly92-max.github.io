@@ -55,4 +55,8 @@ function csvcell(x){const s=String(x??'').replace(/^[=+@\-\t\r]/,'\u0027$&');ret
 function download(){const lines=[['Nombre','Fecha','Caso','Producto','Paso','Respuesta estudiante','Respuesta esperada','Acierto'],...records.map(r=>[currentName,new Date().toLocaleString('es-EC'),r.caso,r.producto,r.paso,r.eleccion,r.correcta,r.acierto?'Sí':'No']),[],['Puntuación',score+' / '+(cases.length*3)],[],['Justificación 1',$('#reflection1').value],['Justificación 2',$('#reflection2').value]];const csv='\ufeff'+lines.map(row=>row.map(csvcell).join(';')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='Analisis_riesgo_sanitario_'+new Date().toISOString().slice(0,10)+'.csv';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
 $('#start').onclick=()=>{currentName=$('#student').value.trim()||'Equipo / estudiante sin identificar';index=0;stage=0;score=0;answered=false;records=[];$('#reflection1').value='';$('#reflection2').value='';display('game');render()};$('#concepts').onclick=()=>{const e=$('#conceptpanel');e.classList.toggle('hide');$('#concepts').textContent=e.classList.contains('hide')?'Ver criterios de análisis':'Ocultar criterios'};$('#next').onclick=advance;$('#again').onclick=()=>display('intro');$('#download').onclick=download;$('#print').onclick=()=>window.print();
 </script>
+
+<script src="../registro-google-sheets/config.js"></script>
+<script src="../registro-google-sheets/registro.js"></script>
+<script src="../registro-google-sheets/juegos.js"></script>
 </body></html>
