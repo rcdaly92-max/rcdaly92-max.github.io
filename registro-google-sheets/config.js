@@ -1,4 +1,3 @@
-// Configuración de Google Sheets para los juegos UTE.
-// Solo registrar entregas formativas; no usar para exámenes oficiales.
-// La URL de Apps Script se configurará después de comprobar la prueba de conexión.
-window.UTE_REGISTRO_URL = '';
+// Registro formativo UTE: dirección de Google Apps Script autorizada por la docente.
+// La dirección es visible en los juegos públicos. No utilizar para evaluaciones oficiales.
+window.UTE_REGISTRO_URL = "https://script.google.com/macros/s/AKfycbwb5BE5aOKSSTrR0VFsFzR5czTh-E7TC2cxjzx-OIBOQLMpID5QitoI0zFezoi56Kjz9g/exec";
