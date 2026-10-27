@@ -40,4 +40,8 @@ function choose(i){if(answered)return;answered=true;let item=order[idx],ok=i===i
 function next(){idx++;if(idx===order.length){finish();return}show()}
 function finish(){switchScreen('end');$('#fill').style.width='100%';let name=$('#student').value.trim()||'Estudiante / equipo';$('#studentName').textContent=name;$('#finalScore').textContent=`${hits} / ${order.length}`;$('#hits').textContent=hits;$('#miss').textContent=order.length-hits;let p=Math.round(hits*100/order.length);$('#percent').textContent=p+'%';$('#message').textContent=p>=85?'Dominio sólido: justifica siempre según la etiqueta y el estado del alimento.':p>=65?'Buen avance: refuerza los casos que cambian al abrir, cocinar o cortar.':'Repasa las tres categorías y practica con nuevos ejemplos.';let incorrect=records.filter(x=>!x.ok);$('#review').innerHTML=incorrect.length?incorrect.map(r=>`<div class="answer"><b>${r.item.e} ${r.item.q} — ${C[r.item.a]}</b>${r.item.why}</div>`).join(''):'<p>¡Todas las respuestas correctas! No hay conceptos pendientes de refuerzo.</p>'}
 $('#begin').addEventListener('click',start);$('#next').addEventListener('click',next);$('#again').addEventListener('click',start);
-</script></body></html>
+</script>
+<script src="../registro-google-sheets/config.js"></script>
+<script src="../registro-google-sheets/registro.js"></script>
+<script src="../registro-google-sheets/juegos.js"></script>
+</body></html>
