@@ -24,7 +24,7 @@ document.addEventListener('click',e=>{
         record(item.q+' — '+item.ctx,chosen,expect,'Clasificación según vida útil','VIDA-'+String(idx+1).padStart(2,'0'));
       }
     }else if(kind==='riesgo'){
-      if(b.id==='start'||b.id==='again'){answers.length=0;seen.clear();attempt=null;delivered=false;}
+      if(b.id==='start'||b.id==='again'){answers.length=0;seen.clear();attempt=null;delivered=false;document.getElementById('ute-entrega')?.remove();}
       if(b.closest('#options')&&b.classList.contains('option')){
         const caseItem=cases[index],q=getQuestion(),chosen=b.textContent.trim(),expected=q.choices[q.correct];
         record(caseItem.name+' — '+q.text,chosen,expected,'Análisis del riesgo sanitario','RIESGO-'+(index+1)+'-'+(stage+1));
