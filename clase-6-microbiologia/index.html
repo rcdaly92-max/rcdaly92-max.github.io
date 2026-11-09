@@ -32,18 +32,18 @@ textarea{min-height:108px;resize:vertical}label{font-weight:700}
 <body><header><div><b>UTE · HIGIENE Y SANIDAD ALIMENTARIA</b><br><span>Gastronomía · Unidad 1 · Sesión 6</span></div><label>PRÁCTICA FORMATIVA</label></header>
 <main>
 <section id="intro" class="card"><h1>Misión Microbiología: identifica y previene</h1>
-<p>Actividad individual para reconocer <b>bacterias, virus, hongos</b> y los factores de crecimiento microbiano en alimentos. Base: Guamialamá (2019), capítulo II y factores CHATTO del capítulo I; complemento OMS y Codex.</p>
-<div class="pills"><span class="pill">12 casos</span><span class="pill">Nota automática /10</span><span class="pill">Retroalimentación por respuesta</span></div>
+<p>Actividad individual para reconocer <b>bacterias, virus, hongos</b> y los características y ejemplos de microorganismos asociados con alimentos. Base: Guamialamá (2019), capítulo II; complemento OMS y Codex.</p>
+<div class="pills"><span class="pill">13 casos</span><span class="pill">Nota automática /10</span><span class="pill">Retroalimentación por respuesta</span></div>
 <div class="panel"><b>Instrucciones.</b> Escribe el mismo código que usaste en las clases anteriores, responde sin omitir preguntas y al finalizar selecciona <b>Enviar al registro UTE</b>. Se registrarán tus respuestas y tu nota. Este ejercicio no sustituye la tarea final de infografía.</div>
 <div class="row"><div class="field"><label for="name">Nombre y apellido</label><input id="name" maxlength="100" autocomplete="name" placeholder="Nombre completo"></div><div class="field"><label for="code">Código de estudiante</label><input id="code" maxlength="65" placeholder="El mismo de las actividades anteriores"></div><div class="field"><label for="group">Paralelo o grupo (opcional)</label><input id="group" maxlength="40" placeholder="Ej. G1"></div></div>
-<p id="startError" class="small" role="alert"></p><div class="actions"><button class="btn" id="start">Iniciar los 12 casos</button></div></section>
+<p id="startError" class="small" role="alert"></p><div class="actions"><button class="btn" id="start">Iniciar los 13 casos</button></div></section>
 <section id="quiz" class="card hide"><div class="counter"><span id="progressText">Caso 1 / 12</span><span id="hits">0 aciertos</span></div><div class="progress"><div id="bar"></div></div>
 <h2 id="question"></h2><p id="context" class="case"></p><div class="options" id="options"></div><div id="feedback"></div>
 <div class="actions"><button id="next" class="btn hide">Siguiente caso</button></div></section>
 <section id="reason" class="card hide"><h2>Explica una decisión en cocina</h2>
-<p>En 2–4 frases, analiza el arroz cocido: ¿qué condiciones favorecen un riesgo microbiológico y qué harías para controlarlas?</p>
-<textarea id="reflection" maxlength="900" placeholder="Explica al menos dos factores CHATTO y una acción preventiva concreta."></textarea>
-<p class="muted small">Esta reflexión se registra para revisión docente; no modifica la nota automática de los 12 casos.</p>
+<p>En 2–4 frases, compara una bacteria, un virus y un hongo. Menciona un alimento asociado a cada ejemplo.</p>
+<textarea id="reflection" maxlength="900" placeholder="Incluye tres microorganismos, su grupo y un alimento asociado."></textarea>
+<p class="muted small">Esta reflexión se registra para revisión docente; no modifica la nota automática de los 13 casos.</p>
 <p id="reasonError" class="small" role="alert"></p><div class="actions"><button class="btn" id="complete">Ver resultados</button></div></section>
 <section id="result" class="card hide"><h2>Resultados individuales</h2><p id="identity"></p><div class="metrics"><div class="metric"><b id="score">0/12</b>Aciertos</div><div class="metric"><b id="grade">0/10</b>Nota</div><div class="metric"><b id="pct">0%</b>Porcentaje</div></div>
 <div class="note"><b>El registro se realiza solamente al pulsar Enviar.</b> Conserva el ID de confirmación. Si no se confirma, no des por enviada la actividad.</div>
@@ -56,18 +56,175 @@ textarea{min-height:108px;resize:vertical}label{font-weight:700}
 const ENDPOINT='https://script.google.com/macros/s/AKfycbwb5BE5aOKSSTrR0VFsFzR5czTh-E7TC2cxjzx-OIBOQLMpID5QitoI0zFezoi56Kjz9g/exec';
 const ACT='clase-6-microbiologia';
 const QUESTIONS=[
-{id:'M06-01',topic:'Bacterias',q:'¿Qué agente puede multiplicarse en un alimento si encuentra condiciones favorables?',ctx:'Una preparación húmeda permanece varias horas sin control de temperatura.',o:['Norovirus','Salmonella','Hepatitis A','Ninguno'],a:1,why:'Salmonella es una bacteria. Los virus no se multiplican dentro del alimento.'},
-{id:'M06-02',topic:'Virus',q:'¿Qué afirmación es correcta sobre norovirus?',ctx:'Un manipulador enfermo prepara una ensalada lista para consumo.',o:['Crece en hojas de lechuga','Se transmite por manos contaminadas, pero no se multiplica en el alimento','Muere siempre en refrigeración','Es un moho'],a:1,why:'El virus puede llegar al alimento por el manipulador; necesita células vivas para reproducirse.'},
-{id:'M06-03',topic:'Hongos',q:'¿Cuál es un ejemplo de hongo alimentario?',ctx:'Aparecen colonias vellosas no esperadas sobre pan almacenado.',o:['Moho','Salmonella','Norovirus','Cloro'],a:0,why:'El moho es un hongo. Algunas especies alteran alimentos o producen micotoxinas.'},
-{id:'M06-04',topic:'CHATTO - humedad',q:'¿Qué indica la actividad de agua (aw)?',ctx:'Comparamos arroz seco con arroz ya cocinado.',o:['El peso del alimento','La cantidad de sal únicamente','La disponibilidad de agua para microorganismos','El número de bacterias'],a:2,why:'Aw expresa agua disponible, no necesariamente el porcentaje total de humedad.'},
-{id:'M06-05',topic:'CHATTO - acidez',q:'¿Qué propiedad expresa el pH?',ctx:'El cocinero añade limón o vinagre a una preparación.',o:['Acidez o alcalinidad','Temperatura interna','Tiempo de enfriamiento','Cantidad de proteínas'],a:0,why:'El pH mide acidez/alcalinidad. Modifica el crecimiento de distintas especies, sin garantizar por sí solo inocuidad.'},
-{id:'M06-06',topic:'CHATTO - temperatura',q:'¿Qué conducta corresponde a las cinco claves de la OMS?',ctx:'Un guiso cocinado debe mantenerse caliente antes del servicio.',o:['Mantenerlo tibio por tiempo indefinido','Dejarlo toda la mañana a temperatura ambiente','Mantenerlo por encima de 60 °C como referencia OMS','Guardarlo junto a alimentos crudos'],a:2,why:'La OMS recomienda mantener la comida caliente por encima de 60 °C y refrigerar prontamente lo perecedero.'},
-{id:'M06-07',topic:'CHATTO - tiempo',q:'¿Qué factor se combina con la temperatura al dejar comida cocida sin control?',ctx:'Una bandeja de arroz se mantiene sobre la mesa durante varias horas.',o:['Solo el olor','El tiempo de exposición','El color del plato','El tamaño de la cuchara'],a:1,why:'Tiempo + temperatura pueden aumentar la oportunidad de proliferación de bacterias.'},
-{id:'M06-08',topic:'Contaminación cruzada',q:'¿Qué control es adecuado para una ensalada lista para consumo?',ctx:'Se usó una tabla para cortar pollo crudo inmediatamente antes de preparar la ensalada.',o:['Usar la misma tabla sin lavar','Separar utensilios y limpiar/desinfectar de forma adecuada','Solo retirar restos visibles','Añadir sal a la ensalada'],a:1,why:'El alimento crudo puede transferir microorganismos a la ensalada mediante utensilios.'},
-{id:'M06-09',topic:'Levaduras',q:'¿Qué microorganismo puede ser beneficioso en la panificación?',ctx:'La masa fermenta antes de ingresar al horno.',o:['Una levadura seleccionada','Norovirus','Salmonella','Vidrio molido'],a:0,why:'Las levaduras son hongos empleados en fermentación. No todos los microorganismos son patógenos.'},
-{id:'M06-10',topic:'Micotoxinas',q:'¿Cuál es la interpretación más segura al ver moho accidental?',ctx:'Una bolsa con pan tiene manchas de moho visible.',o:['Todos los mohos son comestibles','Solo quitando la mancha el alimento es seguro','No es posible descartar toxinas ni identificar la especie por el aspecto','La refrigeración elimina cualquier toxina'],a:2,why:'Algunos mohos pueden producir micotoxinas; no se identifican solo por la vista.'},
-{id:'M06-11',topic:'Oxígeno',q:'¿Qué afirmación es correcta sobre el oxígeno?',ctx:'Una cocina usa envasado al vacío para ciertos productos.',o:['Sin oxígeno ningún microorganismo puede crecer','Existen microorganismos que pueden crecer sin oxígeno','El vacío sustituye toda refrigeración','El vacío esteriliza los alimentos'],a:1,why:'Existen microorganismos anaerobios y facultativos; el vacío no reemplaza los controles sanitarios.'},
-{id:'M06-12',topic:'Prevención OMS',q:'¿Cuál es la decisión más completa para prevenir ETA?',ctx:'Se reciben alimentos frescos para cocinar y servir.',o:['Oler cada alimento solamente','Confiar en que el frío elimina bacterias','Mantener la higiene, separar crudos, cocinar bien y cuidar temperatura y agua','Guardar crudos y listos juntos'],a:2,why:'Las cinco claves de OMS integran limpieza, separación, cocción, temperaturas seguras y agua/materias primas seguras.'}
+ {
+  "id": "M06-01",
+  "topic": "Bacterias",
+  "q": "Una partida de pollo y huevos llega a cocina. ¿Qué bacteria puede estar asociada?",
+  "ctx": "Materia prima de origen animal",
+  "o": [
+   "Norovirus",
+   "Salmonella",
+   "Saccharomyces"
+  ],
+  "a": 1,
+  "why": "Salmonella es una bacteria vinculada a aves y huevos."
+ },
+ {
+  "id": "M06-02",
+  "topic": "Bacterias",
+  "q": "¿Qué bacteria se asocia a aves crudas y leche no pasteurizada?",
+  "ctx": "Recepción de pollo y leche",
+  "o": [
+   "Campylobacter",
+   "Hepatitis A",
+   "Penicillium"
+  ],
+  "a": 0,
+  "why": "Campylobacter puede encontrarse en pollo y leche no pasteurizada."
+ },
+ {
+  "id": "M06-03",
+  "topic": "Bacterias",
+  "q": "¿Qué cepas de E. coli tienen especial relevancia en carne molida y hojas verdes?",
+  "ctx": "Hamburguesas y vegetales de hoja",
+  "o": [
+   "E. coli STEC",
+   "Todas las levaduras",
+   "Norovirus"
+  ],
+  "a": 0,
+  "why": "E. coli productora de toxina Shiga (STEC) es una bacteria de importancia alimentaria."
+ },
+ {
+  "id": "M06-04",
+  "topic": "Bacterias",
+  "q": "¿Cuál puede encontrarse en quesos blandos y pescado ahumado?",
+  "ctx": "Tabla de quesos y salmón ahumado",
+  "o": [
+   "Listeria monocytogenes",
+   "Hepatitis E",
+   "Saccharomyces"
+  ],
+  "a": 0,
+  "why": "Listeria monocytogenes está asociada a algunos quesos y pescados ahumados."
+ },
+ {
+  "id": "M06-05",
+  "topic": "Bacterias",
+  "q": "¿Qué bacteria esporulada se vincula al arroz cocido?",
+  "ctx": "Arroz cocido servido en un bufé",
+  "o": [
+   "Staphylococcus aureus",
+   "Bacillus cereus",
+   "Norovirus"
+  ],
+  "a": 1,
+  "why": "Bacillus cereus forma esporas y puede asociarse a arroz y cereales cocidos."
+ },
+ {
+  "id": "M06-06",
+  "topic": "Bacterias",
+  "q": "Una persona toca alimentos preparados. ¿Qué bacteria puede proceder de piel y nariz?",
+  "ctx": "Manos del manipulador",
+  "o": [
+   "Staphylococcus aureus",
+   "Penicillium roqueforti",
+   "Virus hepatitis A"
+  ],
+  "a": 0,
+  "why": "Staphylococcus aureus puede encontrarse en piel y fosas nasales."
+ },
+ {
+  "id": "M06-07",
+  "topic": "Bacterias",
+  "q": "¿Con qué tipo de alimento puede relacionarse Clostridium botulinum?",
+  "ctx": "Conservas preparadas de forma incorrecta",
+  "o": [
+   "Conservas inadecuadas",
+   "Pan fermentado con levadura comercial",
+   "Fruta fresca lavada"
+  ],
+  "a": 0,
+  "why": "Clostridium botulinum forma esporas y se ha vinculado con conservas inadecuadas."
+ },
+ {
+  "id": "M06-08",
+  "topic": "Bacterias",
+  "q": "¿Qué género bacteriano se asocia especialmente a productos marinos?",
+  "ctx": "Ostras y otros moluscos",
+  "o": [
+   "Saccharomyces",
+   "Vibrio",
+   "Norovirus como bacteria"
+  ],
+  "a": 1,
+  "why": "Vibrio es un género de bacterias que incluye especies asociadas a mariscos."
+ },
+ {
+  "id": "M06-09",
+  "topic": "Virus",
+  "q": "¿Qué afirmación sobre norovirus es correcta?",
+  "ctx": "Ensalada lista para consumo",
+  "o": [
+   "Se divide en el alimento",
+   "Puede llegar por manos o agua contaminadas, sin multiplicarse en el alimento",
+   "Es una levadura"
+  ],
+  "a": 1,
+  "why": "Norovirus necesita células vivas para reproducirse; los alimentos pueden transportarlo."
+ },
+ {
+  "id": "M06-10",
+  "topic": "Virus",
+  "q": "¿Qué virus puede asociarse con mariscos y frutos rojos contaminados?",
+  "ctx": "Ostras y frutos rojos",
+  "o": [
+   "Virus de hepatitis A",
+   "Bacillus cereus",
+   "Penicillium camemberti"
+  ],
+  "a": 0,
+  "why": "Hepatitis A puede transmitirse por alimentos contaminados como mariscos y bayas."
+ },
+ {
+  "id": "M06-11",
+  "topic": "Virus",
+  "q": "¿Cuál puede transmitirse por productos de cerdo insuficientemente cocinados?",
+  "ctx": "Carne porcina",
+  "o": [
+   "Virus de hepatitis E",
+   "Salmonella como virus",
+   "Moho de queso azul"
+  ],
+  "a": 0,
+  "why": "El virus de hepatitis E puede estar asociado a productos porcinos."
+ },
+ {
+  "id": "M06-12",
+  "topic": "Hongos",
+  "q": "¿Qué microorganismo se usa habitualmente para fermentar masas de pan?",
+  "ctx": "Elaboración de pan",
+  "o": [
+   "Saccharomyces cerevisiae",
+   "Norovirus",
+   "Listeria"
+  ],
+  "a": 0,
+  "why": "Saccharomyces cerevisiae es una levadura, y las levaduras son hongos."
+ },
+ {
+  "id": "M06-13",
+  "topic": "Hongos",
+  "q": "¿Qué moho puede producir aflatoxinas en determinados granos y frutos secos?",
+  "ctx": "Maíz y cacahuete",
+  "o": [
+   "Aspergillus flavus",
+   "Campylobacter jejuni",
+   "Virus de hepatitis A"
+  ],
+  "a": 0,
+  "why": "Algunas cepas de Aspergillus flavus pueden producir aflatoxinas."
+ }
 ];
 const $=id=>document.getElementById(id);const clean=v=>String(v||'').trim();
 const state={i:0,score:0,answers:[],submission:null,delivered:false,busy:false};
@@ -78,7 +235,7 @@ state.i=0;state.score=0;state.answers=[];state.submission=null;state.delivered=f
 function draw(){const q=QUESTIONS[state.i];$('progressText').textContent='Caso '+(state.i+1)+' de '+QUESTIONS.length;$('hits').textContent=state.score+' aciertos';$('bar').style.width=(100*state.i/QUESTIONS.length)+'%';$('question').textContent=q.q;$('context').textContent=q.ctx;const opts=$('options');opts.replaceChildren();q.o.forEach((answer,j)=>{const b=document.createElement('button');b.className='choice';b.textContent=String.fromCharCode(65+j)+'. '+answer;b.addEventListener('click',()=>choose(j));opts.appendChild(b)});$('feedback').replaceChildren();$('next').classList.add('hide')}
 function choose(j){const q=QUESTIONS[state.i];if(state.answers.length>state.i)return;const yes=j===q.a;if(yes)state.score++;state.answers.push({q,choice:j,yes});Array.from($('options').children).forEach((b,k)=>{b.disabled=true;if(k===q.a)b.classList.add('ok');if(k===j&&!yes)b.classList.add('bad')});const box=document.createElement('div');box.className='feedback '+(yes?'ok':'bad');box.textContent=(yes?'Correcto. ':'Revisar. Respuesta correcta: '+q.o[q.a]+'. ')+q.why;$('feedback').append(box);$('hits').textContent=state.score+' aciertos';$('next').textContent=state.i===QUESTIONS.length-1?'Completar reflexión':'Siguiente caso';$('next').classList.remove('hide')}
 function next(){state.i++;if(state.i>=QUESTIONS.length){show('reason')}else draw()}
-function complete(){const reason=clean($('reflection').value);if(reason.length<55){$('reasonError').textContent='Escribe al menos dos factores de riesgo y una medida preventiva concreta.';return}$('reasonError').textContent='';const score=state.score;state.submission={submission_id:uid(),submitted_at:new Date().toISOString(),class_name:'Clase 6',activity_id:ACT,activity_name:'Clase 6 · Microbiología y factores CHATTO',student_name:clean($('name').value),student_code:clean($('code').value),group:clean($('group').value),score_correct:score,score_total:QUESTIONS.length,version:'ute-microbiologia-1',origin:location.href,reflections:JSON.stringify({pregunta:'Factores de riesgo y control en arroz cocido',respuesta:reason,nota:'Reflexión para revisión docente; no modifica nota automática'}),answers:state.answers.map(h=>({question_id:h.q.id,question:h.q.q+' — '+h.q.ctx,selected:h.q.o[h.choice],expected:h.q.o[h.q.a],is_correct:h.yes,topic:h.q.topic}))};$('identity').textContent='Estudiante: '+state.submission.student_name+' | Código: '+state.submission.student_code;$('score').textContent=score+'/'+QUESTIONS.length;$('grade').textContent=(10*score/QUESTIONS.length).toFixed(1)+'/10';$('pct').textContent=Math.round(100*score/QUESTIONS.length)+'%';const view=$('review');view.replaceChildren();const bad=state.answers.filter(h=>!h.yes);if(!bad.length){const p=document.createElement('p');p.textContent='Todas las respuestas fueron correctas.';view.append(p)}else bad.forEach(h=>{const block=document.createElement('div');block.className='answer';const b=document.createElement('b');b.textContent=h.q.q;const p=document.createElement('p');p.textContent='Solución: '+h.q.o[h.q.a]+'. '+h.q.why;block.append(b,p);view.append(block)});show('result')}
+function complete(){const reason=clean($('reflection').value);if(reason.length<55){$('reasonError').textContent='Incluye tres ejemplos y sus alimentos asociados.';return}$('reasonError').textContent='';const score=state.score;state.submission={submission_id:uid(),submitted_at:new Date().toISOString(),class_name:'Clase 6',activity_id:ACT,activity_name:'Clase 6 · Microorganismos alimentarios',student_name:clean($('name').value),student_code:clean($('code').value),group:clean($('group').value),score_correct:score,score_total:QUESTIONS.length,version:'ute-microbiologia-1',origin:location.href,reflections:JSON.stringify({pregunta:'Comparación de bacterias, virus y hongos vinculados a alimentos',respuesta:reason,nota:'Reflexión para revisión docente; no modifica nota automática'}),answers:state.answers.map(h=>({question_id:h.q.id,question:h.q.q+' — '+h.q.ctx,selected:h.q.o[h.choice],expected:h.q.o[h.q.a],is_correct:h.yes,topic:h.q.topic}))};$('identity').textContent='Estudiante: '+state.submission.student_name+' | Código: '+state.submission.student_code;$('score').textContent=score+'/'+QUESTIONS.length;$('grade').textContent=(10*score/QUESTIONS.length).toFixed(1)+'/10';$('pct').textContent=Math.round(100*score/QUESTIONS.length)+'%';const view=$('review');view.replaceChildren();const bad=state.answers.filter(h=>!h.yes);if(!bad.length){const p=document.createElement('p');p.textContent='Todas las respuestas fueron correctas.';view.append(p)}else bad.forEach(h=>{const block=document.createElement('div');block.className='answer';const b=document.createElement('b');b.textContent=h.q.q;const p=document.createElement('p');p.textContent='Solución: '+h.q.o[h.q.a]+'. '+h.q.why;block.append(b,p);view.append(block)});show('result')}
 function save(){const d=state.submission;if(!d)return;const lines=['UTE | Clase 6 | Microbiología',d.student_name+' | '+d.student_code,'Aciertos: '+d.score_correct+'/'+d.score_total,'Nota: '+(10*d.score_correct/d.score_total).toFixed(1)+'/10', '','Respuestas'];state.answers.forEach((h,i)=>lines.push((i+1)+'. '+h.q.q+' | Elegida: '+h.q.o[h.choice]+' | Correcta: '+h.q.o[h.q.a]));lines.push('Reflexión: '+clean($('reflection').value));const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Clase6_Microbiologia_'+d.student_code.replace(/[^a-z0-9_-]/gi,'_')+'.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)}
 function deliver(d,url){return new Promise((resolve,reject)=>{if(!/^https:\/\/script\.google\.com\/macros\/s\/[^\s/?#]+\/exec(?:\?.*)?$/.test(url))return reject(new Error('Receptor no configurado'));const frame=document.createElement('iframe');frame.hidden=true;frame.name='ute'+uid().slice(0,18);const form=document.createElement('form');form.action=url;form.method='POST';form.target=frame.name;form.hidden=true;const data=document.createElement('textarea');data.name='payload';data.value=JSON.stringify(d);form.append(data);document.body.append(frame,form);let done=false,attempt=0,timer=null,script=null;const cb='acuse'+uid().slice(0,18);function clear(){done=true;clearTimeout(timer);script?.remove();try{delete window[cb]}catch(e){window[cb]=undefined}form.remove();setTimeout(()=>frame.remove(),650)}function check(){if(done)return;if(++attempt>16){clear();reject(new Error('No se confirmó el registro en Google Sheets'));return}script=document.createElement('script');window[cb]=res=>{clearTimeout(timer);script?.remove();script=null;if(done)return;if(res&&res.ok&&res.estado==='guardado'){clear();resolve(d.submission_id)}else timer=setTimeout(check,1500)};script.onerror=()=>{clearTimeout(timer);script?.remove();script=null;timer=setTimeout(check,1500)};script.src=url+'?action=status&id='+encodeURIComponent(d.submission_id)+'&callback='+cb+'&n='+Date.now();document.head.append(script);timer=setTimeout(()=>{script?.remove();check()},3000)}try{form.submit();timer=setTimeout(check,1400)}catch(e){clear();reject(e)}})}
 async function send(){if(!state.submission||state.busy||state.delivered)return;state.busy=true;$('send').disabled=true;$('sendStatus').className='status';$('sendStatus').textContent='Enviando y comprobando recepción...';try{const id=await deliver(state.submission,ENDPOINT);state.delivered=true;$('sendStatus').className='status ok';$('sendStatus').textContent='ENTREGA CONFIRMADA en Google Sheets. ID: '+id;$('send').textContent='Entregado'}catch(e){$('sendStatus').className='status bad';$('sendStatus').textContent='ENVÍO NO CONFIRMADO. '+e.message+'. Puedes reintentar sin cambiar el identificador.';$('send').disabled=false}finally{state.busy=false}}
