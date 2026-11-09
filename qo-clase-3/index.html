@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Banco de disoluciones · Química orgánica</title>
+<style>
+:root{font:17px/1.55 system-ui;color:#17334e;background:#eaf1f3;--teal:#086961;--navy:#17334e}*{box-sizing:border-box}body{margin:0}main{max-width:850px;margin:auto;padding:22px}header,section{border-radius:18px;padding:clamp(16px,4vw,32px);margin-bottom:17px}header{color:white;background:var(--navy)}h1{font-size:clamp(2rem,6vw,3rem);letter-spacing:-.045em;line-height:1.06;margin:.22em 0}p{margin:.6em 0}header p{color:#d7e6ef}section{background:white;border:1px solid #cddce2}fieldset{margin:18px 0;border:0;padding:0}legend{font-weight:750;font-size:1.18rem;margin-bottom:10px}label{display:block;margin:8px 0;font-weight:650}input[type=text]{display:block;width:100%;border:1px solid #7e98a9;border-radius:8px;padding:10px;font:inherit}input[type=radio]{margin:0;accent-color:var(--teal)}.option{display:flex;align-items:baseline;gap:12px;border:1px solid #a5bdc7;border-radius:9px;padding:12px;cursor:pointer}.option:has(input:checked){background:#e2f3ec;border-color:var(--teal)}button{margin:8px 8px 0 0;background:var(--teal);border:0;color:white;border-radius:9px;padding:10px 16px;font:inherit;font-weight:750;cursor:pointer}button[disabled]{opacity:.58;cursor:default}button.secondary{background:#e6eef2;color:var(--navy)}:focus-visible{outline:3px solid #ac5c02;outline-offset:3px}.note{background:#eaf4f1;padding:10px 14px;border-left:4px solid var(--teal)}.muted,footer{color:#425b70}.progress{font-weight:750;color:var(--teal)}progress{width:100%;accent-color:var(--teal)}[hidden]{display:none!important}li{margin:10px 0}
+</style>
+<main><header><small>QUÍMICA ORGÁNICA · UNIDAD 1 · CLASE 3</small><h1>Banco de disoluciones</h1><p>Clasifica muestras, interpreta datos y explica tus predicciones.</p><small>4 casos · 10 preguntas · 15 minutos · 1 punto por acierto</small></header>
+<section id="intro"><h2>Antes de empezar</h2><p>Resuelve los casos de forma individual. Podrás revisar tus elecciones antes de finalizar. El resultado y las explicaciones aparecerán al terminar.</p><p id="notice" class="note"></p><form id="begin"><div id="identity" hidden><label>Código de estudiante<input name="code" type="text" maxlength="50" autocomplete="off"></label><label>Paralelo<input name="group" type="text" maxlength="50" autocomplete="off"></label></div><button>Comenzar</button></form></section>
+<section id="exercise" hidden><p id="progress" class="progress"></p><progress id="track" max="10"></progress><h2 id="caseTitle"></h2><p id="context" class="note"></p><form id="answer"><fieldset><legend id="question"></legend><div id="options"></div></fieldset><button id="next">Continuar</button><button type="button" class="secondary" id="back">Anterior</button></form></section>
+<section id="check" hidden><h2>Revisa tus elecciones</h2><ol id="choices"></ol><button id="finish"></button><button id="edit" class="secondary">Volver a las preguntas</button><p id="receipt" role="status" aria-live="polite"></p></section>
+<section id="result" hidden><h2 id="score"></h2><ol id="feedback"></ol><button id="download" class="secondary">Descargar constancia</button></section>
+<footer>MSc. Daliannis Rodríguez Céspedes · Química orgánica</footer></main>
+<script>
+'use strict';
+const ITEMS=[
+["1 · Frascos del laboratorio","El frasco A contiene agua y sacarosa totalmente disuelta. El frasco B contiene agua con partículas de carbonato de calcio que se depositan al reposar.","¿Cómo se clasifican A y B?",["A es coloide y B es disolución","A es disolución y B es suspensión","A es suspensión y B es coloide","Ambos son disoluciones"],1,"La sacarosa disuelta se distribuye a escala molecular. El sedimento en B evidencia partículas que pueden separarse."],
+["1 · Frascos del laboratorio","","En A, ¿qué especie queda dispersa en el agua?",["Moléculas de sacarosa","Iones de sacarosa positivos y negativos","Cristales sólidos de sacarosa","Átomos de carbono libres"],0,"La sacarosa se disuelve conservando sus moléculas."],
+["2 · Cristalización","Datos de un soluto X. A 20 °C se disuelven hasta 24 g por 100 g de agua. A 50 °C se disuelven hasta 40 g por 100 g de agua. Supón que no se evapora agua y que se alcanza el equilibrio.","Si se agregan 36 g de X a 100 g de agua a 50 °C, ¿cómo queda el sistema?",["Saturado con 12 g de sólido","Saturado sin sólido","Insaturado con todo X disuelto","Sobresaturado sin sólido"],2,"A 50 °C, 36 g está por debajo del máximo de 40 g."],
+["2 · Cristalización","","La mezcla anterior se enfría a 20 °C. ¿Qué masa cristaliza al alcanzar el equilibrio?",["4 g","12 g","16 g","24 g"],1,"Al enfriar, pueden quedar disueltos 24 g. Cristalizan 36 − 24 = 12 g."],
+["2 · Cristalización","","Con el sistema ya a 20 °C y sin añadir agua, ¿qué consigue agitar la mezcla?",["Aumenta el límite a 36 g","Reduce el límite a 12 g","Duplica el límite a 48 g","Puede acelerar el equilibrio. El límite sigue en 24 g"],3,"La agitación cambia la rapidez de los procesos de transferencia. A 20 °C el límite sigue siendo 24 g por 100 g de agua."],
+["3 · Gas en equilibrio","A temperatura constante, una disolución contiene 6,0 mmol/L de un gas poco reactivo cuando su presión parcial es 300 kPa. El sistema opera en el régimen de Henry.","¿Cuál será la concentración de equilibrio a 150 kPa de presión parcial?",["3,0 mmol/L","6,0 mmol/L","9,0 mmol/L","12,0 mmol/L"],0,"Al reducir a la mitad la presión parcial, la concentración de equilibrio se reduce a la mitad."],
+["3 · Gas en equilibrio","","Si la presión total aumenta añadiendo otro gas y la presión parcial del gas estudiado y la temperatura siguen fijas, ¿qué predice el modelo de Henry?",["Su concentración disuelta aumenta","Su concentración disuelta disminuye","Su concentración disuelta se mantiene","Su concentración disuelta pasa a cero"],2,"En este modelo, la variable relevante es la presión parcial del gas de interés."],
+["4 · pH y conductividad","Compara disoluciones acuosas a la misma temperatura. Considera un ácido débil HA y una base débil B, cuyas formas ionizadas son más solubles en agua. No hay precipitación ni degradación.","¿Qué ajuste de pH favorece la forma ionizada de la base débil B?",["Subir el pH para formar BH⁺","Bajar el pH para formar BH⁺","Bajar el pH para mantener B neutra","Subir el pH para aumentar la protonación"],1,"En un medio más ácido, B acepta un protón y aumenta la fracción BH⁺."],
+["4 · pH y conductividad","","La actividad de H₃O⁺ se reduce a la décima parte. ¿Qué cambio experimenta el pH?",["Disminuye dos unidades","Disminuye una unidad","Aumenta dos unidades","Aumenta una unidad"],3,"Como pH = −log₁₀ a(H₃O⁺), una reducción de diez veces en la actividad aumenta el pH en una unidad."],
+["4 · pH y conductividad","","¿Por qué conduce mejor una disolución acuosa diluida de NaCl que una de sacarosa a igual concentración molar?",["Na⁺ y Cl⁻ se mueven como portadores de carga","La sacarosa forma más iones que el NaCl","El NaCl convierte el agua en un metal conductor","La corriente la transportan cristales de sal"],0,"Na⁺ y Cl⁻ son iones móviles. La sacarosa se disuelve principalmente en forma molecular."]
+];
+const RECEIVER=''; // URL /exec de la implementación específica de la Clase 3
+const $=id=>document.getElementById(id);
+const letters='ABCD';
+const responses=Array(10).fill(null);
+const cases=Object.fromEntries(ITEMS.filter(q=>q[1]).map(q=>[q[0],q[1]]));
+let step=0, payload=null, confirmed=false;
+const remote=Boolean(RECEIVER);
+$('notice').textContent=remote?'Tu código, paralelo, respuestas y puntaje se registrarán en QO al confirmar.':'Modo de práctica. El registro en QO está pendiente de activación. Puedes descargar tus respuestas al terminar.';
+$('identity').hidden=!remote;
+for(const field of $('identity').querySelectorAll('input'))field.required=remote;
+$('finish').textContent=remote?'Enviar a QO':'Ver resultado';
+function go(id){
+ for(const name of ['intro','exercise','check','result'])$(name).hidden=name!==id;
+ const head=$(id).querySelector('h2');head.tabIndex=-1;head.focus();
+}
+function row(list,text){
+ const li=document.createElement('li');li.textContent=text;list.append(li);
+}
+function render(){
+ const [topic,,prompt,options]=ITEMS[step];
+ $('progress').textContent='Pregunta '+(step+1)+' de 10';$('track').value=step+1;
+ $('caseTitle').textContent=topic;$('context').textContent=cases[topic];$('question').textContent=prompt;
+ $('options').replaceChildren();
+ options.forEach((text,i)=>{
+  const label=document.createElement('label');label.className='option';
+  const input=document.createElement('input');input.type='radio';input.name='option';input.value=i;input.required=true;input.checked=responses[step]===i;
+  label.append(input,letters[i]+'. '+text);$('options').append(label);
+ });
+ $('back').hidden=step===0;$('next').textContent=step===9?'Revisar respuestas':'Continuar';go('exercise');
+}
+$('begin').onsubmit=e=>{e.preventDefault();render();};
+$('answer').onchange=e=>{if(e.target.name==='option')responses[step]=Number(e.target.value);};
+$('answer').onsubmit=e=>{
+ e.preventDefault();
+ if(step<9){step++;render();return;}
+ $('choices').replaceChildren();
+ ITEMS.forEach((q,i)=>row($('choices'),q[2]+' — '+q[3][responses[i]]));go('check');
+};
+$('back').onclick=()=>{step--;render();};
+$('edit').onclick=()=>{step=0;render();};
+function status(id){
+ return new Promise((resolve,reject)=>{
+  const callback='qo_'+crypto.randomUUID().replaceAll('-','');
+  const script=document.createElement('script');
+  const timer=setTimeout(()=>finish(null),5000);
+  function finish(data){clearTimeout(timer);delete window[callback];script.remove();data?resolve(data):reject(Error('Sin respuesta de QO'));}
+  window[callback]=finish;script.onerror=()=>finish(null);
+  const url=new URL(RECEIVER);url.search=new URLSearchParams({action:'status',id,callback});
+  script.src=url;document.head.append(script);
+ });
+}
+async function send(){
+ const url=new URL(RECEIVER);
+ if(url.protocol!=='https:'||url.hostname!=='script.google.com'||!url.pathname.endsWith('/exec'))throw Error('URL de recepción inválida');
+ await fetch(url,{method:'POST',mode:'no-cors',body:new URLSearchParams({payload:JSON.stringify(payload)}),signal:AbortSignal.timeout(16000)});
+ for(let i=0;i<8;i++){
+  try{const receipt=await status(payload.id);if(receipt.ok&&receipt.activity==='qo-clase-3')return true;}catch{}
+  await new Promise(resolve=>setTimeout(resolve,1100));
+ }
+ return false;
+}
+$('finish').onclick=async()=>{
+ if(responses.some(x=>x===null))return;
+ if(remote){
+  const fields=new FormData($('begin'));
+  payload??={id:crypto.randomUUID(),activity:'qo-clase-3',code:fields.get('code').trim(),group:fields.get('group').trim(),answers:[...responses]};
+  if(!payload.code||!payload.group){payload=null;go('intro');return;}
+  $('finish').disabled=true;$('edit').disabled=true;$('receipt').textContent='Verificando el registro en QO…';
+  try{confirmed=await send();}catch{confirmed=false;}
+  if(!confirmed){$('finish').disabled=false;$('finish').textContent='Reintentar envío';$('receipt').textContent='QO todavía no confirmó la entrega. Reintenta con este mismo intento y conserva la página abierta.';return;}
+ }
+ const score=ITEMS.filter((q,i)=>q[4]===responses[i]).length;
+ $('score').textContent='Resultado · '+score+'/10';
+ if(confirmed)row($('feedback'),'Entrega confirmada en QO · '+payload.id);
+ ITEMS.forEach((q,i)=>row($('feedback'),(q[4]===responses[i]?'Correcta. ':'Revisa. ')+q[2]+' '+q[5]));
+ go('result');
+};
+$('download').onclick=()=>{
+ const score=ITEMS.filter((q,i)=>q[4]===responses[i]).length;
+ const lines=['Química orgánica · Clase 3 · Banco de disoluciones',confirmed?'Entrega confirmada en QO: '+payload.id:'Práctica local sin envío a QO','Puntaje: '+score+'/10',...ITEMS.map((q,i)=>(i+1)+'. '+q[2]+' — '+q[3][responses[i]])];
+ const url=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}));
+ const a=document.createElement('a');a.href=url;a.download='QO_Clase3_Constancia.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+</script>
+</html>
