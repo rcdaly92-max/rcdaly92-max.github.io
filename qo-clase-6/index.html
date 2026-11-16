@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Soluciones químicas · Química orgánica</title>
+<style>
+:root{font:17px/1.55 system-ui;color:#17334e;background:#eaf1f3;--teal:#086961;--navy:#17334e}*{box-sizing:border-box}body{margin:0}main{max-width:850px;margin:auto;padding:22px}header,section{border-radius:18px;padding:clamp(16px,4vw,32px);margin-bottom:17px}header{color:white;background:var(--navy)}h1{font-size:clamp(2rem,6vw,3rem);letter-spacing:-.045em;line-height:1.06;margin:.22em 0}p{margin:.6em 0}header p{color:#d7e6ef}section{background:white;border:1px solid #cddce2}fieldset{margin:18px 0;border:0;padding:0}legend{font-weight:750;font-size:1.18rem;margin-bottom:10px}label{display:block;margin:8px 0;font-weight:650}input[type=text]{display:block;width:100%;border:1px solid #7e98a9;border-radius:8px;padding:10px;font:inherit}input[type=radio]{margin:0;accent-color:var(--teal)}.option{display:flex;align-items:baseline;gap:12px;border:1px solid #a5bdc7;border-radius:9px;padding:12px;cursor:pointer}.option:has(input:checked){background:#e2f3ec;border-color:var(--teal)}button{margin:8px 8px 0 0;background:var(--teal);border:0;color:white;border-radius:9px;padding:10px 16px;font:inherit;font-weight:750;cursor:pointer}button[disabled]{opacity:.58;cursor:default}button.secondary{background:#e6eef2;color:var(--navy)}:focus-visible{outline:3px solid #ac5c02;outline-offset:3px}.note{background:#eaf4f1;padding:10px 14px;border-left:4px solid var(--teal)}.muted,footer{color:#425b70}.progress{font-weight:750;color:var(--teal)}progress{width:100%;accent-color:var(--teal)}[hidden]{display:none!important}li{margin:10px 0}
+</style>
+<main><header><small>QUÍMICA ORGÁNICA · UNIDAD 1 · CLASE 6</small><h1>Soluciones químicas</h1><p>Practica la molaridad, la molalidad y la fracción molar. Explica cómo un soluto cambia las propiedades de una disolución.</p><small>10 preguntas · 8–10 minutos · 1 punto por acierto</small></header>
+<section id="intro"><h2>Antes de empezar</h2><p>Responde de forma individual. Podrás revisar tus elecciones antes de finalizar. El resultado y las explicaciones aparecerán al terminar.</p><p id="notice" class="note"></p><form id="begin"><div id="identity" hidden><label>Código de estudiante<input name="code" type="text" maxlength="50" autocomplete="off"></label><label>Paralelo<input name="group" type="text" maxlength="50" autocomplete="off"></label></div><button>Comenzar</button></form></section>
+<section id="exercise" hidden><p id="progress" class="progress"></p><progress id="track" max="10" aria-label="Progreso de la actividad"></progress><h2 id="caseTitle"></h2><form id="answer"><fieldset><legend id="question"></legend><div id="options"></div></fieldset><button id="next">Continuar</button><button type="button" class="secondary" id="back">Anterior</button></form></section>
+<section id="check" hidden><h2>Revisa tus elecciones</h2><ol id="choices"></ol><button id="finish"></button><button id="edit" class="secondary">Volver a las preguntas</button><p id="receipt" role="status" aria-live="polite"></p></section>
+<section id="result" hidden><h2 id="score"></h2><ol id="feedback"></ol><button id="download" class="secondary">Descargar constancia</button></section>
+<footer>MSc. Daliannis Rodríguez Céspedes · Química orgánica</footer></main>
+<script>
+'use strict';
+const ITEMS=[["Molaridad", "", "¿Qué cantidad aparece en el denominador al calcular la molaridad?", ["Kilogramos de disolvente", "Litros de disolución", "Litros de disolvente", "Moles totales de la mezcla"], 1, "La molaridad (M) expresa los moles de soluto por litro de disolución. El volumen se mide después de preparar la mezcla."], ["Molaridad", "", "Se disuelven 10,0 g de NaCl y se completa a 500 mL de disolución. ¿Cuál es la molaridad? Masa molar de NaCl = 58,44 g/mol.", ["0,171 M", "0,0584 M", "0,500 M", "0,342 M"], 3, "Primero se obtienen 10,0 ÷ 58,44 ≈ 0,171 mol. Luego se divide por 0,500 L para obtener 0,342 mol/L."], ["Molalidad", "", "¿Qué cantidad aparece en el denominador al calcular la molalidad?", ["Litros de disolución", "Kilogramos de disolución", "Kilogramos de disolvente", "Moles totales de la mezcla"], 2, "La molalidad (m) se expresa en moles de soluto por kilogramo de disolvente."], ["Molalidad", "", "Se disuelven 10,0 g de NaCl en 100 g de agua. ¿Cuál es la molalidad? Masa molar de NaCl = 58,44 g/mol.", ["0,171 mol/kg", "1,56 mol/kg", "0,0584 mol/kg", "1,71 mol/kg"], 3, "Se obtienen 10,0 ÷ 58,44 ≈ 0,171 mol. Al dividir por 0,100 kg de agua se obtiene 1,71 mol/kg."], ["Fracción molar", "", "Una mezcla contiene 2 mol de etanol y 3 mol de agua. ¿Cuál es la fracción molar del etanol?", ["0,67", "0,60", "0,40", "0,20"], 2, "Los moles totales son 2 + 3 = 5 mol. La fracción molar del etanol es 2 ÷ 5 = 0,40."], ["Propiedades coligativas", "", "En disoluciones diluidas con el mismo disolvente, ¿qué determina principalmente la magnitud del efecto coligativo?", ["El color del soluto", "La masa molar del disolvente por sí sola", "La concentración efectiva de partículas disueltas", "El tamaño de las partículas de soluto"], 2, "En el modelo de disoluciones diluidas, el efecto depende de la cantidad efectiva de partículas dispersas por una cantidad dada de disolvente o de disolución, según la propiedad."], ["Presión de vapor", "", "A temperatura fija, ¿cómo cambia la presión de vapor del agua al añadir un soluto no volátil a una disolución ideal?", ["Disminuye.", "Aumenta.", "Se mantiene.", "Se vuelve cero."], 0, "Al añadir soluto disminuye la fracción molar del agua. Según la ley de Raoult, la presión de vapor del agua disminuye con esa fracción."], ["Elevación ebulloscópica", "", "¿Por qué una disolución con un soluto no volátil hierve a mayor temperatura que el disolvente puro, a la misma presión externa?", ["El soluto eleva la presión externa.", "El soluto se evapora antes que el disolvente.", "La disolución necesita más temperatura para igualar la presión externa.", "El soluto aumenta la presión de vapor a la misma temperatura."], 2, "La disolución tiene menor presión de vapor a la misma temperatura. Para hervir, debe calentarse hasta que esa presión iguale la externa."], ["Descenso crioscópico", "", "¿Cuál es el punto de congelación de una disolución acuosa ideal 0,50 mol/kg de un no electrolito? Kf = 1,86 °C·kg/mol. El agua pura congela a 0,00 °C.", ["−1,86 °C", "+0,93 °C", "0,00 °C", "−0,93 °C"], 3, "El descenso es ΔTf = 1,86 × 0,50 = 0,93 °C. Se resta de 0,00 °C y resulta −0,93 °C."], ["Ósmosis", "", "Una membrana deja pasar agua y retiene la sacarosa. A igual presión inicial, ¿hacia dónde fluye netamente el agua entre dos disoluciones de distinta concentración?", ["Hacia el lado más diluido.", "En el sentido en que se mueve la sacarosa.", "Hacia el lado más concentrado.", "En ambos sentidos con igual flujo neto."], 2, "El agua cruza en ambas direcciones. El flujo neto va del lado más diluido al más concentrado mientras no lo compense una diferencia de presión."]];
+const RECEIVER=''; // Pega aquí la URL /exec del receptor de la Clase 6.
+const $=id=>document.getElementById(id);
+const letters='ABCD';
+const responses=Array(10).fill(null);
+let step=0, payload=null, confirmed=false;
+const remote=Boolean(RECEIVER);
+$('notice').textContent=remote?'Tu código, paralelo, respuestas y puntaje se registrarán en QO al confirmar.':'Modo de práctica. El registro en QO está pendiente de activación. Puedes descargar tus respuestas al terminar.';
+$('identity').hidden=!remote;
+for(const field of $('identity').querySelectorAll('input'))field.required=remote;
+$('finish').textContent=remote?'Enviar a QO':'Ver resultado';
+function go(id){
+ for(const name of ['intro','exercise','check','result'])$(name).hidden=name!==id;
+ const head=$(id).querySelector('h2');head.tabIndex=-1;head.focus();
+}
+function row(list,text){
+ const li=document.createElement('li');li.textContent=text;list.append(li);
+}
+function render(){
+ const [topic,,prompt,options]=ITEMS[step];
+ $('progress').textContent='Pregunta '+(step+1)+' de 10';$('track').value=step+1;
+ $('caseTitle').textContent=topic;$('question').textContent=prompt;
+ $('options').replaceChildren();
+ options.forEach((text,i)=>{
+  const label=document.createElement('label');label.className='option';
+  const input=document.createElement('input');input.type='radio';input.name='option';input.value=i;input.required=true;input.checked=responses[step]===i;
+  label.append(input,letters[i]+'. '+text);$('options').append(label);
+ });
+ $('back').hidden=step===0;$('next').textContent=step===9?'Revisar respuestas':'Continuar';go('exercise');
+}
+$('begin').onsubmit=e=>{e.preventDefault();render();};
+$('answer').onchange=e=>{if(e.target.name==='option')responses[step]=Number(e.target.value);};
+$('answer').onsubmit=e=>{
+ e.preventDefault();
+ if(step<9){step++;render();return;}
+ $('choices').replaceChildren();
+ ITEMS.forEach((q,i)=>row($('choices'),q[2]+' — '+q[3][responses[i]]));go('check');
+};
+$('back').onclick=()=>{step--;render();};
+$('edit').onclick=()=>{step=0;render();};
+function status(id){
+ return new Promise((resolve,reject)=>{
+  const callback='qo_'+crypto.randomUUID().replaceAll('-','');
+  const script=document.createElement('script');
+  const timer=setTimeout(()=>finish(null),5000);
+  function finish(data){clearTimeout(timer);delete window[callback];script.remove();data?resolve(data):reject(Error('Sin respuesta de QO'));}
+  window[callback]=finish;script.onerror=()=>finish(null);
+  const url=new URL(RECEIVER);url.search=new URLSearchParams({action:'status',id,callback});
+  script.src=url;document.head.append(script);
+ });
+}
+async function send(){
+ const url=new URL(RECEIVER);
+ if(url.protocol!=='https:'||url.hostname!=='script.google.com'||!url.pathname.endsWith('/exec'))throw Error('URL de recepción inválida');
+ await fetch(url,{method:'POST',mode:'no-cors',body:new URLSearchParams({payload:JSON.stringify(payload)}),signal:AbortSignal.timeout(16000)});
+ for(let i=0;i<4;i++){
+  try{const receipt=await status(payload.id);if(receipt.ok&&receipt.activity==='qo-clase-6'&&receipt.id===payload.id)return true;}catch{}
+  await new Promise(resolve=>setTimeout(resolve,1100));
+ }
+ return false;
+}
+$('finish').onclick=async()=>{
+ if(responses.some(x=>x===null))return;
+ if(remote){
+  const fields=new FormData($('begin'));
+  payload??={id:crypto.randomUUID(),activity:'qo-clase-6',code:fields.get('code').trim(),group:fields.get('group').trim(),answers:[...responses]};
+  if(!payload.code||!payload.group){payload=null;go('intro');return;}
+  $('finish').disabled=true;$('edit').disabled=true;$('receipt').textContent='Verificando el registro en QO…';
+  try{confirmed=await send();}catch{confirmed=false;}
+  if(!confirmed){$('finish').disabled=false;$('finish').textContent='Reintentar envío';$('receipt').textContent='QO todavía no confirmó la entrega. Reintenta con este mismo intento y conserva la página abierta.';return;}
+ }
+ const score=ITEMS.filter((q,i)=>q[4]===responses[i]).length;
+ $('score').textContent='Resultado · '+score+'/10';
+ if(confirmed)row($('feedback'),'Entrega confirmada en QO · '+payload.id);
+ ITEMS.forEach((q,i)=>row($('feedback'),(q[4]===responses[i]?'Correcta. ':'Revisa. ')+q[2]+' Respuesta correcta: '+q[3][q[4]]+' '+q[5]));
+ go('result');
+};
+$('download').onclick=()=>{
+ const score=ITEMS.filter((q,i)=>q[4]===responses[i]).length;
+ const lines=['Química orgánica · Clase 6 · Soluciones químicas',confirmed?'Entrega confirmada en QO: '+payload.id:'Práctica sin envío a QO','Puntaje: '+score+'/10',...ITEMS.map((q,i)=>(i+1)+'. '+q[2]+' — '+q[3][responses[i]])];
+ const url=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}));
+ const a=document.createElement('a');a.href=url;a.download='QO_Clase6_Constancia.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+</script>
+</html>
+
