@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Química Orgánica | Unidad 2 · Clase 1</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#17334e;background:#edf4f8;--navy:#173f74;--green:#087a54}
+*{box-sizing:border-box}body{margin:0}main{max-width:860px;padding:22px;margin:auto}
+header{background:linear-gradient(120deg,#0b3c72,#185c91);color:white;border-radius:20px;padding:28px;position:relative}
+header:after{content:"UTE";position:absolute;right:24px;top:20px;border:3px solid #fff;border-radius:50%;padding:12px;font-weight:800}
+header small{color:#d6f0ef;letter-spacing:1.3px}h1{font-size:clamp(1.8rem,5vw,2.65rem);margin:.5rem 0;max-width:650px;line-height:1.13}
+header p{max-width:640px;color:#ecf6ff}section{background:white;border-radius:16px;border:1px solid #c7d9e7;padding:clamp(18px,4vw,30px);margin-top:16px}
+h2{margin:.3rem 0 1rem}p{line-height:1.55}label{display:block;font-weight:650;margin:14px 0 5px}
+input[type=text]{width:100%;border:1px solid #8ca6b5;padding:12px;border-radius:9px;font:inherit}
+button{border:0;border-radius:10px;background:#086c5a;color:#fff;font-size:1rem;font-weight:700;padding:12px 20px;cursor:pointer;margin:12px 8px 0 0}
+button.secondary{background:#e6f0f5;color:#17334e}button:disabled{opacity:.54;cursor:not-allowed}
+button:focus-visible,input:focus-visible{outline:3px solid #d39330;outline-offset:3px}
+.choice{display:flex;align-items:flex-start;gap:12px;border:1px solid #a9c2cf;border-radius:11px;padding:12px;margin:10px 0;cursor:pointer;font-weight:500}
+.choice:has(input:checked){border-color:#087a54;background:#e4f6ee}.choice input{margin-top:4px;accent-color:#087a54}
+.banner{padding:12px 16px;border-radius:10px;background:#e8f2f5;border-left:5px solid #198073;color:#17334e}
+.muted{color:#486177}.eyebrow{color:var(--green);text-transform:uppercase;letter-spacing:1.2px;font-size:.82rem;font-weight:800}
+progress{width:100%;height:15px;accent-color:var(--green)}[hidden]{display:none!important}ol li{margin:10px 0;line-height:1.5}
+.score{font-size:3.2rem;font-weight:800;color:var(--green)}
+.status{padding:13px;border-radius:10px;background:#f1f5f7;color:#243c50}
+a{color:#075b92}footer{text-align:center;color:#536777;font-size:.84rem;margin:26px auto}
+</style></head><body><main>
+<header><small>UNIVERSIDAD UTE · MEDICINA VETERINARIA</small><h1>Laboratorio del carbono</h1><p>Unidad 2 · Propiedades estructurales de los compuestos orgánicos · Clase 1</p><p><b>10 retos</b> · 10 puntos · 12–15 minutos</p></header>
+<section id="start"><span class="eyebrow">Antes de comenzar</span><h2>Identifica tu participación</h2>
+<p>Responde individualmente y revisa tus elecciones antes de enviar. Cada respuesta correcta vale 1 punto.</p>
+<p id="notice" class="banner"></p>
+<form id="identity"><label>Nombre y apellidos completos<input type="text" name="name" required maxlength="120" autocomplete="name"></label>
+<label>Código de estudiante<input type="text" name="code" required maxlength="80" autocomplete="off"></label>
+<label>Curso o paralelo<input type="text" name="group" required maxlength="80" autocomplete="off"></label>
+<button type="submit">Comenzar los 10 retos</button></form></section>
+<section id="question" hidden><span id="topic" class="eyebrow"></span><h2 id="counter"></h2><progress id="progress" max="10"></progress>
+<form id="answer"><fieldset style="border:0;padding:0;margin:16px 0"><legend id="stem" style="font-weight:750;font-size:1.24rem"></legend><div id="choices"></div></fieldset>
+<button type="button" id="prev" class="secondary">Anterior</button><button type="submit" id="next">Continuar</button></form></section>
+<section id="review" hidden><span class="eyebrow">Confirmación</span><h2>Revisa tus diez respuestas</h2><ol id="summary"></ol>
+<p class="muted">Puedes regresar y modificar cualquier respuesta antes de confirmar la entrega.</p>
+<button type="button" id="edit" class="secondary">Corregir respuestas</button><button type="button" id="submit">Confirmar entrega a QO</button>
+<p id="status" class="status" role="status" aria-live="polite"></p></section>
+<section id="result" hidden><span class="eyebrow">Resultado</span><h2>Evaluación finalizada</h2><div id="score" class="score"></div>
+<p id="receipt" class="status" role="status"></p>
+<details><summary style="cursor:pointer;font-weight:700">Consultar respuestas correctas y explicaciones</summary><ol id="feedback"></ol></details>
+<button type="button" id="download" class="secondary">Descargar comprobante</button>
+<button type="button" id="again">Nueva participación</button></section>
+<footer>MSc. Daliannis Rodríguez Céspedes · Química Orgánica · UTE</footer>
+</main><script>
+'use strict';
+const ACTIVITY='qo-unidad2-clase1';
+const ENDPOINT=''; // Pegar aquí la URL /exec de la nueva implementación de Code.gs.
+const ITEMS=[
+['Carbono','¿Qué propiedad del carbono permite que establezca cuatro enlaces covalentes?',['Monovalencia','Tetravalencia','Divalencia','Carácter metálico'],1,'El carbono dispone de cuatro electrones de valencia, que puede compartir formando cuatro enlaces covalentes.'],
+['Comparación','¿Cuál de las siguientes sustancias contiene carbono y se clasifica habitualmente como inorgánica?',['Etanol (C₂H₆O)','Metano (CH₄)','Dióxido de carbono (CO₂)','Glucosa (C₆H₁₂O₆)'],2,'El dióxido de carbono es una excepción habitual a la clasificación de compuestos de carbono como orgánicos.'],
+['Hidrocarburos','¿Qué combinación de elementos forma un hidrocarburo?',['Carbono e hidrógeno','Carbono y oxígeno','Hidrógeno y oxígeno','Carbono, hidrógeno y nitrógeno'],0,'Los hidrocarburos contienen exclusivamente carbono e hidrógeno.'],
+['Hidrocarburos','¿Qué rasgo caracteriza a un alqueno?',['Solo enlaces simples C–C','Un triple enlace C≡C','Al menos un doble enlace C=C','Un grupo carboxilo –COOH'],2,'Los alquenos presentan un enlace doble carbono–carbono; los alquinos incluyen enlaces triples.'],
+['Grupos funcionales','¿A qué función química pertenece el etanol (CH₃CH₂OH)?',['Aldehído','Alcohol','Éter','Cetona'],1,'El grupo hidroxilo –OH unido a un carbono saturado caracteriza a los alcoholes como el etanol.'],
+['Grupos funcionales','¿Qué grupo funcional identifica al ácido etanoico presente en el vinagre?',['Carboxilo (–COOH)','Hidroxilo (–OH)','Amino (–NH₂)','Éter (–O–)'],0,'El ácido etanoico (CH₃COOH) es un ácido carboxílico, caracterizado por el grupo –COOH.'],
+['Series homólogas','En una serie homóloga de alcanos, ¿en qué difieren dos miembros consecutivos?',['En un grupo –OH','En un anillo de carbono','En una unidad –CH₂–','En un átomo de oxígeno'],2,'Dos miembros consecutivos de una serie homóloga de alcanos difieren en una unidad –CH₂–.'],
+['Estructura','¿Qué caracteriza a un compuesto heterocíclico?',['Una cadena abierta ramificada','Un anillo formado solo por carbono','Dos cadenas lineales separadas','Un anillo que contiene algún átomo distinto del carbono'],3,'Un heterociclo contiene al menos un heteroátomo, como N, O o S, entre los átomos del anillo.'],
+['Nomenclatura','Al nombrar un alcano ramificado, ¿qué se selecciona primero como cadena principal?',['La cadena continua de carbonos más larga','La cadena con más hidrógenos','La cadena con menos enlaces C–C','El sustituyente de menor masa'],0,'Para estos ejemplos simples se selecciona la cadena continua de carbonos más larga y luego se numera.'],
+['Nomenclatura','¿Cuál es el nombre correcto de CH₃–CH(CH₃)–CH₂–CH₃?',['3-metilbutano','2-metilbutano','2-metilpropano','Pentano'],1,'La cadena principal tiene cuatro carbonos y el sustituyente metilo ocupa el carbono 2.']
+];
+const KEY='qo-u2-clase1-2026';const $=id=>document.getElementById(id);let state={step:0,answers:Array(10).fill(null),id:null,identity:null,confirmed:false};
+try{const old=JSON.parse(localStorage.getItem(KEY));if(old&&Array.isArray(old.answers)&&old.answers.length===10)state=old}catch{}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch{}}
+function show(id){for(const n of ['start','question','review','result'])$(n).hidden=n!==id;window.scrollTo({top:0,behavior:'instant'})}
+function render(){const i=state.step,q=ITEMS[i];$('topic').textContent=q[0];$('counter').textContent='Reto '+(i+1)+' de 10';$('progress').value=i+1;$('stem').textContent=q[1];$('choices').replaceChildren();q[2].forEach((label,n)=>{const box=document.createElement('label');box.className='choice';const radio=document.createElement('input');radio.type='radio';radio.name='choice';radio.value=n;radio.checked=state.answers[i]===n;box.append(radio,document.createTextNode(String.fromCharCode(65+n)+'. '+label));$('choices').append(box)});$('prev').hidden=i===0;$('next').textContent=i===9?'Revisar respuestas':'Continuar';show('question')}
+function review(){if(state.answers.some(a=>a===null)){state.step=state.answers.findIndex(a=>a===null);return render()}$('summary').replaceChildren();ITEMS.forEach((q,i)=>{const li=document.createElement('li');li.textContent=q[1]+' — '+q[2][state.answers[i]];$('summary').append(li)});$('status').textContent=ENDPOINT?'Revisa tus respuestas y confirma el envío a QO.':'La conexión al archivo QO está pendiente de activación. Puedes descargar un comprobante de práctica, pero aún no se guardan notas en Drive.';$('submit').textContent=ENDPOINT?'Confirmar entrega a QO':'Ver resultado (sin envío)';show('review')}
+$('notice').textContent=ENDPOINT?'Tus datos, respuestas y nota se enviarán a la hoja QO después de confirmar.':'Modo de práctica: la actividad está publicada, pero la recepción de calificaciones en QO requiere activar el receptor de Apps Script.';
+$('identity').onsubmit=e=>{e.preventDefault();const data=new FormData(e.target);state.identity={name:String(data.get('name')).trim(),code:String(data.get('code')).trim(),group:String(data.get('group')).trim()};if(Object.values(state.identity).some(x=>!x))return;state.id=crypto.randomUUID();state.answers=Array(10).fill(null);state.step=0;state.confirmed=false;persist();render()};
+$('answer').onsubmit=e=>{e.preventDefault();const opt=$('choices').querySelector('input:checked');if(!opt){alert('Selecciona una respuesta.');return}state.answers[state.step]=Number(opt.value);state.step++;if(state.step===10){state.step=9;persist();review()}else{persist();render()}};
+$('prev').onclick=()=>{const opt=$('choices').querySelector('input:checked');if(opt)state.answers[state.step]=Number(opt.value);state.step=Math.max(0,state.step-1);persist();render()};
+$('edit').onclick=()=>{state.step=0;render()};
+function getStatus(url,id){return new Promise((resolve,reject)=>{const cb='qo_u2_'+crypto.randomUUID().replaceAll('-','');let done=false;const script=document.createElement('script');function finish(data){if(done)return;done=true;clearTimeout(timer);script.remove();delete window[cb];data?resolve(data):reject(Error('No se recibió confirmación'))}const timer=setTimeout(()=>finish(),4500);window[cb]=finish;script.onerror=()=>finish();const u=new URL(url);u.search=new URLSearchParams({action:'status',activity:ACTIVITY,id,callback:cb});script.src=u.toString();document.head.append(script)})}
+async function send(p){const url=new URL(ENDPOINT);if(url.protocol!=='https:'||url.hostname!=='script.google.com'||!url.pathname.endsWith('/exec'))throw Error('Receptor no válido');await fetch(url,{method:'POST',mode:'no-cors',body:new URLSearchParams({payload:JSON.stringify(p)})});for(let i=0;i<5;i++){try{const r=await getStatus(ENDPOINT,p.id);if(r.ok&&r.activity===ACTIVITY&&r.id===p.id&&r.estado==='guardado')return true}catch{}await new Promise(r=>setTimeout(r,900))}return false}
+function payload(){return {id:state.id,activity:ACTIVITY,student_name:state.identity.name,student_code:state.identity.code,group:state.identity.group,answers:state.answers,origin:location.href}}
+function result(){const points=state.answers.filter((a,i)=>a===ITEMS[i][3]).length;$('score').textContent=points+' / 10';$('receipt').textContent=state.confirmed?'Entrega confirmada en QO. Código: '+state.id:'Práctica completada sin registro en QO; no se ha guardado ninguna nota.';$('feedback').replaceChildren();ITEMS.forEach((q,i)=>{const li=document.createElement('li');li.textContent=(state.answers[i]===q[3]?'Acierto. ':'Revisar. ')+q[1]+' Respuesta: '+q[2][q[3]]+'. '+q[4];$('feedback').append(li)});show('result')}
+$('submit').onclick=async()=>{const b=$('submit');if(!ENDPOINT){result();return}b.disabled=true;$('status').textContent='Enviando y verificando la entrega…';try{state.confirmed=await send(payload());if(!state.confirmed)throw Error('El receptor no confirmó la inscripción');persist();result()}catch(e){b.disabled=false;$('status').textContent='No se confirmó el registro en QO. '+e.message+'. Reintenta sin reiniciar esta página.'}};
+$('download').onclick=()=>{const p=payload();p.points=state.answers.filter((a,i)=>a===ITEMS[i][3]).length;p.confirmed=state.confirmed;const a=document.createElement('a'),url=URL.createObjectURL(new Blob([JSON.stringify(p,null,2)],{type:'application/json'}));a.href=url;a.download='QO_Unidad2_Clase1_'+state.id+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+$('again').onclick=()=>{if(!confirm('¿Crear una nueva participación?'))return;localStorage.removeItem(KEY);state={step:0,answers:Array(10).fill(null),id:null,identity:null,confirmed:false};show('start')};
+if(state.identity&&state.id){if(state.answers.every(a=>a!==null))state.confirmed?result():review();else render()}else show('start');
+</script></body></html>
